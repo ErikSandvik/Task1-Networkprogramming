@@ -16,12 +16,18 @@ public class PrimeNumberThread implements Runnable {
 
     @Override
     public void run() {
-
+        for (int i = start; i <= end; i++) {
+            if (isPrime(i)) {
+                synchronized (primeNumbers) {
+                    primeNumbers.add(i);
+                }
+            }
+        }
     }
 
     private boolean isPrime(int num)
     {
-        if(num<=1) {
+        if(num <= 1) {
             return false;
         }
         for(int i = 2; i <= num / 2; i++) {
@@ -34,10 +40,7 @@ public class PrimeNumberThread implements Runnable {
 
 }
 
-class RunThreads {
-    public static void main(String[] args) {
-        ExecutorService threadPool = Executors.newFixedThreadPool(2);
-    }
+class PrimeFinder {
 
     private int[] makePartitions(int originalInteger, int amountOfPartitions) {
         int[] partitions = new int[amountOfPartitions];
@@ -59,4 +62,11 @@ class RunThreads {
 
         return partitions;
     }
+}
+
+class RunThreads {
+    public static void main(String[] args) {
+        ExecutorService threadPool = Executors.newFixedThreadPool(2);
+    }
+
 }
